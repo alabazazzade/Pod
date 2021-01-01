@@ -9,7 +9,7 @@ wn.tracer(0)
 
 # pod class
 class Pod:
-    def __init__(self):
+    def __init__(self) :
         self.podd = turtle.Turtle()
 
     def speed(self, ss):
@@ -37,7 +37,7 @@ class Pod:
     def move_down_1(self):
         y = self.podd.ycor()
         y -= 20
-        self.podd.sety(y)   #------
+        self.podd.sety(y)
         pod1.position(-350, y)
 
     def move_up_2(self):
@@ -46,12 +46,28 @@ class Pod:
         self.podd.sety(y)
         pod2.position(350, y)
 
-
     def move_down_2(self):
         y = self.podd.ycor()
         y -= 20
         self.podd.sety(y)
         pod2.position(350, y)
+
+    def sety(self, n):
+         self.podd.sety(n)
+
+    def setx(self, m):
+        self.podd.setx(m)
+
+    def ycor(self):
+        y = self.podd.ycor()
+        return y
+
+    def xcor(self):
+        x = self.podd.xcor()
+        return x
+    def goto(self, x , y):
+        self.podd.goto(x, y)
+
 
 # pod1
 
@@ -79,14 +95,37 @@ ball.color('white')
 ball.shapesize(1, 1)
 ball.position(100, 100)
 
-
 wn.listen()
 wn.onkeypress(pod1.move_up_1, 'w')
 wn.onkeypress(pod1.move_down_1, 's')
-wn.onkeypress(pod2.move_up_2, 'u')
-wn.onkeypress(pod2.move_down_2, 'j')
+wn.onkeypress(pod2.move_up_2, 'Up')
+wn.onkeypress(pod2.move_down_2, 'Down')
 
-
+# ball
+ball_dx = 0.5
+ball_dy = 0.5
 
 while True:
     wn.update()
+
+    # move the ball
+
+    ball.sety(ball_dy + ball.ycor())
+    ball.setx(ball.xcor() + ball_dx)
+
+    if ball.ycor() > 290:
+        ball.sety(290)
+        ball_dy *= - 1
+
+    if ball.ycor() < -290:
+        ball.sety(-290)
+        ball_dy *= - 1
+
+    if ball.xcor() > 390:
+        ball.goto(0, 0)
+        ball_dx *= - 1
+
+    if ball.xcor() < -390:
+        ball.goto(0, 0)
+        ball_dx *= - 1
+        
