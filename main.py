@@ -1,5 +1,5 @@
 import turtle
-
+import time
 wn = turtle.Screen()
 wn.bgcolor('black')
 wn.title('Pong by @ala.bzz')
@@ -9,7 +9,7 @@ wn.tracer(0)
 
 # pod class
 class Pod:
-    def __init__(self) :
+    def __init__(self):
         self.podd = turtle.Turtle()
 
     def speed(self, ss):
@@ -53,7 +53,7 @@ class Pod:
         pod2.position(350, y)
 
     def sety(self, n):
-         self.podd.sety(n)
+        self.podd.sety(n)
 
     def setx(self, m):
         self.podd.setx(m)
@@ -65,7 +65,8 @@ class Pod:
     def xcor(self):
         x = self.podd.xcor()
         return x
-    def goto(self, x , y):
+
+    def goto(self, x, y):
         self.podd.goto(x, y)
 
 
@@ -74,7 +75,7 @@ class Pod:
 pod1 = Pod()
 pod1.speed(0)
 pod1.shape('square')
-pod1.color('white')
+pod1.color('green')
 pod1.shapesize(5, 1)
 pod1.position(-350, 0)
 
@@ -83,7 +84,7 @@ pod1.position(-350, 0)
 pod2 = Pod()
 pod2.speed(0)
 pod2.shape('square')
-pod2.color('white')
+pod2.color('blue')
 pod2.shapesize(5, 1)
 pod2.position(350, 0)
 
@@ -101,16 +102,16 @@ wn.onkeypress(pod1.move_down_1, 's')
 wn.onkeypress(pod2.move_up_2, 'Up')
 wn.onkeypress(pod2.move_down_2, 'Down')
 
-# ball
-ball_dx = 0.5
-ball_dy = 0.5
+# ball speed
+ball_dx = 0.45
+ball_dy = 0.45
 
 while True:
     wn.update()
 
     # move the ball
 
-    ball.sety(ball_dy + ball.ycor())
+    ball.sety(ball.ycor() + ball_dy)
     ball.setx(ball.xcor() + ball_dx)
 
     if ball.ycor() > 290:
@@ -128,4 +129,15 @@ while True:
     if ball.xcor() < -390:
         ball.goto(0, 0)
         ball_dx *= - 1
-        
+
+    if(ball.xcor() > 340) and (ball.ycor() < pod2.ycor() + 50) and (ball.ycor() > pod2.ycor() - 50):
+        ball_dx *= -1
+
+    if (ball.xcor() < -340) and (ball.ycor() < pod1.ycor() + 50) and (ball.ycor() > pod1.ycor() - 50):
+        ball_dx *= -1
+
+    # game over
+    if (ball.xcor() < -340) or (ball.xcor() > 340) :
+        wn.bgcolor('red')
+    else:
+        wn.bgcolor('black')
